@@ -1,6 +1,6 @@
 {
   "name": "@petercjl/technical-plan-explainer",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Technical plans to HyperFrames mechanism animation and consistent Cove narration in offline HTML",
   "type": "module",
   "bin": { "technical-plan-explainer": "npm/cli.mjs" },
