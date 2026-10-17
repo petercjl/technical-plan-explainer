@@ -17,8 +17,8 @@
       "contract": "Canonical companion Skill, reference audio generation with task recovery; verified baseline 0.2.1; probe live help"
     },
     {
-      "name": "voice-profile",
-      "contract": "External accepted Cove master and checksum; required, private files stay outside Skill"
+      "name": "voice-synthesis-service",
+      "contract": "Service access is authorized and configured by the user through seedaudiocli; standard accepted Cove master and checksum are bundled under assets/voices; personal overrides stay external"
     },
     {
       "name": "playwright",

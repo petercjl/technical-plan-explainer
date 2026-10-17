@@ -1,0 +1,15 @@
+{
+  "profile_id": "cove-reference-v1",
+  "reference_file": "reference.wav",
+  "reference_sha256": "0133eb5be871f48a46132865d0bbf6be261bec95cf7d78204350bb00f27f5b99",
+  "reference_status": "locked",
+  "synthesis_acceptance": "accepted-by-user",
+  "synthesis": {
+    "model": "seed-audio-1.0",
+    "mode": "audio-ref",
+    "format": "mp3",
+    "sample_rate": 24000,
+    "speech_rate": 0,
+    "pitch_rate": 0
+  }
+}

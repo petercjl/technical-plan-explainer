@@ -39,7 +39,7 @@ description: "把技术方案、架构设计或实施文档转成易懂的 Hyper
 按精确名称解析并完整加载 `hyperframes`；按其当前入口进入 `general-video`，在创作阶段加载所需 core、animation、creative、keyframes 及命名规则。完整本次 brief 写入 BRIEF，已有授权避免重复访谈。使用当前原生 `hyperframes init` 创建项目下的 `composition/`，安装项目固定版本 core/player/GSAP；遵从工作流的注册与确定性合同。输出 `storyboard.json` 和原生项目。正文全部按同一种卡片淡入时回本节点重做。
 
 ### N5 统一声音
-读 [声音及时序路线](references/queries/voice-and-sync.md) 的声音部分。运行 `node scripts/project.mjs profile` 校验外部配置及母版 SHA-256。默认使用已确认的 `cove-reference-v1` 与配置参数；每段引用同一原始母版。个人声音与凭据存放在 Skill 外。
+读 [声音及时序路线](references/queries/voice-and-sync.md) 的声音部分。运行 `node scripts/project.mjs profile` 解析并校验母版 SHA-256。标准 `cove-reference-v1` 母版与固定参数位于随包 assets/voices/，首次使用即可引用；用户已有外部配置时优先保留其选择。每段引用同一原始母版。个人覆盖配置与服务凭据存放在 Skill 外。
 
 按精确名称解析 `seedaudiocli`，用其 `skill source --json` 加载 canonical Skill；探测实际版本、能力和叶子 help，完整请求先 dry-run 再提交。已有明确生成要求是本任务的付费执行授权；不重复询问。记录任务 ID、正文、母版摘要、模型参数与实际返回路径。未知提交结果查询原任务，遵守 CLI 恢复合同，不盲目付费重试。失败只处理受影响片段，成功媒体复用。
 

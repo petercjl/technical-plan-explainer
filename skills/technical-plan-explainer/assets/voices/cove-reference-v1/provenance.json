@@ -1,0 +1,11 @@
+{
+  "asset": "Cove standard reference",
+  "publisher": "OpenAI",
+  "source_page": "https://openai.com/index/chatgpt-can-now-see-hear-and-speak/",
+  "source_audio": "https://cdn.openai.com/new-voice-and-image-capabilities-in-chatgpt/hd/story-cove.mp3",
+  "reference_sha256": "0133eb5be871f48a46132865d0bbf6be261bec95cf7d78204350bb00f27f5b99",
+  "reference_format": "wav",
+  "duration_seconds": 20,
+  "sample_rate": 24000,
+  "usage": "Fixed approved reference for audio-ref synthesis. Source sample retains its original rights; no public-domain or open-license claim. No service credentials included."
+}

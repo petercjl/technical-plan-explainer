@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {hash,writeNew,profile,readJSON,timed,validateProject,fingerprint,asset,fail,run} from './lib.mjs';
 const [cmd,...args]=process.argv.slice(2),flag=n=>{const i=args.indexOf(n);return i>=0?args[i+1]:undefined;};
 run(async()=>{
- if(cmd==='profile'){const p=await profile(args[0]);console.log(JSON.stringify({ok:true,profile_id:p.profile_id,reference_path:p.reference_path,reference_sha256:p.reference_sha256,synthesis:p.synthesis}));return;}
+ if(cmd==='profile'){const p=await profile(args[0]);console.log(JSON.stringify({ok:true,profile_id:p.profile_id,profile_source:p.profile_source,reference_path:p.reference_path,reference_sha256:p.reference_sha256,synthesis:p.synthesis}));return;}
  if(cmd==='doctor'){
   const checks={node22:Number(process.versions.node.split('.')[0])>=22};
   for(const name of ['hyperframes','seedaudiocli','ffprobe']){const r=spawnSync(name,name==='seedaudiocli'?['version']:name==='ffprobe'?['-version']:['--version'],{encoding:'utf8',timeout:15000,env:{...process.env,SEEDAUDIO_AUTO_UPDATE:'0'}});checks[name]={ok:r.status===0,version:r.status===0?r.stdout.trim().split('\n')[0]:'unavailable'};}

@@ -22,6 +22,7 @@
     "rollback": "local package archive plus per-Skill recoverable backups",
     "disable_env": "TECH_PLAN_AUTO_UPDATE=0"
   },
-  "external_dependencies": ["Node.js >=22", "hyperframes with canonical Skills", "seedaudiocli with canonical Skill and user authorization", "ffmpeg/ffprobe", "Playwright plus authorized browser", "external locked Cove voice profile and master"],
-  "configuration": "Private voice, runtime configuration and credentials remain outside the package. Installation does not grant service access."
+  "external_dependencies": ["Node.js >=22", "hyperframes with canonical Skills", "seedaudiocli with canonical Skill and user authorization", "ffmpeg/ffprobe", "Playwright plus authorized browser"],
+  "bundled_voice": {"profile_id":"cove-reference-v1","path":"skills/technical-plan-explainer/assets/voices/cove-reference-v1/voice-profile.json","sha256":"0133eb5be871f48a46132865d0bbf6be261bec95cf7d78204350bb00f27f5b99","override":"explicit profile or existing user configuration takes precedence"},
+  "configuration": "Standard Cove reference and portable profile are bundled. Personal overrides, runtime configuration and credentials remain outside the package. Installation does not grant service access."
 }

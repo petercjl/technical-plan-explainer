@@ -1,7 +1,7 @@
 # Cove 连续性与时序
 
 ## N5 声音
-`project.mjs profile` 读取 TECH_PLAN_VOICE_PROFILE，或当前用户 XDG 配置目录中 technical-plan-explainer/voice-profile.json；未设 XDG 时用目标机器的 .config 约定。母版、确认记录与凭据存放在 Skill 外。脚本验证 accepted/locked、母版校验和与固定模型参数；缺配置返回配置缺口，不能自行挑另一个男声。
+`project.mjs profile` 优先读取显式路径、TECH_PLAN_VOICE_PROFILE 或已有用户 XDG 配置（未设 XDG 时使用 .config），其余情况直接使用随包 assets/voices/cove-reference-v1/ 的标准母版和配置。脚本验证 accepted/locked、母版校验和与固定模型参数。用户配置存在但损坏时报告错误，避免替换其选择。个人覆盖和凭据存放在 Skill 外；标准母版无需使用者重新提供。
 
 默认 cove-reference-v1：同一原始母版，seed-audio-1.0，audio-ref，mp3，24kHz，speech_rate=0，pitch_rate=0。@音频1 指向母版。提示词要求中文自然、平稳、清晰的单人讲述，并附纯正文、必要发音提示；以实际声音检查是否夹有其他说话者或音乐。
 

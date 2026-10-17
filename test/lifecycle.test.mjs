@@ -97,7 +97,11 @@ test('packed installer: fresh global prefix and complete bundled resources',{ski
   const entry=path.join(base,'node_modules/@petercjl/technical-plan-explainer/npm/cli.mjs');
   const resolved=spawnSync(process.execPath,[entry,'skill','source','--json'],{encoding:'utf8'});assert.equal(resolved.status,0);
   const skill=JSON.parse(resolved.stdout).source;
-  for(const f of ['SKILL.md','scripts/bundle.mjs','scripts/verify.mjs','assets/player-shell.html','adapters/workbuddy.json']) assert.ok(fs.existsSync(path.join(skill,f)),f);
+  for(const f of ['SKILL.md','scripts/bundle.mjs','scripts/verify.mjs','assets/player-shell.html','adapters/workbuddy.json','assets/voices/cove-reference-v1/reference.wav','assets/voices/cove-reference-v1/voice-profile.json','assets/voices/cove-reference-v1/provenance.json']) assert.ok(fs.existsSync(path.join(skill,f)),f);
+  const freshEnv={...process.env,XDG_CONFIG_HOME:path.join(scratch,'fresh-config')};delete freshEnv.TECH_PLAN_VOICE_PROFILE;
+  const voice=spawnSync(process.execPath,[entry,'project','profile'],{encoding:'utf8',env:freshEnv});
+  assert.equal(voice.status,0,voice.stdout);const v=JSON.parse(voice.stdout);
+  assert.equal(v.profile_source,'bundled');assert.ok(v.reference_path.startsWith(skill+path.sep));
   const installed=spawnSync(process.execPath,[entry,'skill','install','--agent','workbuddy','--root',path.join(scratch,'packed-host')],{encoding:'utf8'});assert.equal(installed.status,0,installed.stdout);
 });
 test.after(()=>fs.rmSync(scratch,{recursive:true,force:true}));

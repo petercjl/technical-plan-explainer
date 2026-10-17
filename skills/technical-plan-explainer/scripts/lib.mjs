@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
 export const hash=b=>createHash('sha256').update(b).digest('hex');
 export function fail(code,message){throw Object.assign(new Error(message),{code});}
 export const readJSON=async f=>JSON.parse(await fs.readFile(f,'utf8'));
@@ -17,7 +18,11 @@ export async function asset(root,rel){
  return file;
 }
 export const configRoot=()=>process.env.XDG_CONFIG_HOME||path.join(os.homedir(),'.config');
-export async function profile(file=process.env.TECH_PLAN_VOICE_PROFILE||path.join(configRoot(),'technical-plan-explainer','voice-profile.json')){
+export async function profile(file){
+ const explicit=file!==undefined||Boolean(process.env.TECH_PLAN_VOICE_PROFILE);
+ file=file||process.env.TECH_PLAN_VOICE_PROFILE||path.join(configRoot(),'technical-plan-explainer','voice-profile.json');
+ let source='user';
+ if(!explicit){try{await fs.lstat(file);}catch(e){if(e.code!=='ENOENT')throw e;file=fileURLToPath(new URL('../assets/voices/cove-reference-v1/voice-profile.json',import.meta.url));source='bundled';}}
  let p;try{p=await readJSON(file);}catch(e){if(e.code==='ENOENT')fail('CONFIG_REQUIRED','Provide an accepted Cove voice profile');throw e;}
  if(typeof p.reference_file!=='string'||!p.reference_file)fail('VOICE_PROFILE_INVALID','Original voice reference is required');
  const ref=path.resolve(path.dirname(file),p.reference_file);
@@ -26,7 +31,7 @@ export async function profile(file=process.env.TECH_PLAN_VOICE_PROFILE||path.joi
  if(hash(bytes)!==p.reference_sha256)fail('VOICE_REFERENCE_CHANGED','Reference checksum differs from locked profile');
  const s=p.synthesis||{};
  if(s.mode!=='audio-ref'||s.model!=='seed-audio-1.0'||s.sample_rate!==24000||s.speech_rate!==0||s.pitch_rate!==0)fail('VOICE_PROFILE_INVALID','Resolve a deliberate voice-contract change before generating');
- return {...p,reference_path:ref,config_path:file};
+ return {...p,reference_path:ref,config_path:file,profile_source:source};
 }
 export const normalize=s=>String(s).normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');
 export async function fingerprint(root,x){

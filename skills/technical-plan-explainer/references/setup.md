@@ -2,7 +2,9 @@
 
 只在依赖缺失/需要迁移时读。按当前宿主安装规范使用稳定用户环境，探测实际入口和版本。必需 Node.js 22+、hyperframes CLI、seedaudiocli、ffprobe；原生项目安装匹配版本的 @hyperframes/core、@hyperframes/player 与 GSAP。0.8.168 / GSAP 3.14.2 是已验证组合，升级先核对当前上游合同。
 
-声音：TECH_PLAN_VOICE_PROFILE 可指定配置文件；默认使用当前目标用户 XDG 配置根的 technical-plan-explainer/voice-profile.json，未设 XDG 时使用其 .config。字段沿用已确认声音配置：profile_id、reference_file、reference_sha256、reference_status=locked、synthesis_acceptance=accepted-by-user，以及 synthesis 的 model/mode/format/sample_rate/speech_rate/pitch_rate。reference_file 相对该配置文件解析或为该用户显式配置的绝对路径。运行 profile 可探测摘要是否一致。参考声音与确认记录由该用户提供，分享 Skill 不分发个人母版。缺文件时报告 CONFIG_REQUIRED，不能自动下载或换声。
+声音：标准 Cove 母版、固定参数与公开来源记录随包位于 assets/voices/cove-reference-v1/，相对路径可跨机器解析。运行 profile 校验真实文件摘要，返回 profile_source=bundled 或 user。优先级为显式文件参数、TECH_PLAN_VOICE_PROFILE、当前用户 XDG 配置根下 technical-plan-explainer/voice-profile.json、随包标准配置；未设 XDG 时使用用户 .config。显式或已有用户配置损坏、缺母版、摘要不符时直接报告缺口，保留用户选定音色。
+
+个人覆盖配置与音频由使用者外置管理。字段为 profile_id、reference_file、reference_sha256、reference_status=locked、synthesis_acceptance=accepted-by-user，以及 synthesis 的 model/mode/format/sample_rate/speech_rate/pitch_rate。reference_file 相对该配置文件解析或为该用户显式配置的绝对路径。标准母版使用已确认的固定参考音色合成；声音资源本身不包含新讲稿，也不包含配音服务访问权限。
 
 配音服务认证由 canonical seedaudiocli 管理；仅运行它的 auth status/doctor，不读取或打印凭据。安装工具不代表服务已授权。
 

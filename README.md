@@ -8,7 +8,9 @@
 
 > 安装 @petercjl/technical-plan-explainer。
 
-安装完成后开启新会话。需要能执行本地命令的 Agent 和 Node.js 22+。首次制作还需 HyperFrames、seedaudiocli、配音服务授权、外部 Cove 母版及浏览器验收环境；由 Agent 按 Skill 的 setup 合同检查和准备。音色母版与授权由使用者提供，包内不包含个人音频或服务凭据。
+安装完成后开启新会话。需要能执行本地命令的 Agent 和 Node.js 22+。已确认的标准 Cove 母版与固定参数随包提供，安装后即可引用，无需另行提供声音样本。首次制作还需 HyperFrames、seedaudiocli、配音服务授权及浏览器验收环境；由 Agent 按 Skill 的 setup 合同检查和准备。服务凭据保存在使用者环境中，生成新讲稿需调用配音服务；完成的 HTML 可离线播放。
+
+标准母版取自 OpenAI 发布的 [Cove 示例](https://openai.com/index/chatgpt-can-now-see-hear-and-speak/)，来源及摘要随资源保存。配音使用固定参考音频生成，属于参考音色合成，不能保证与 ChatGPT 实时语音逐字一致。
 
 ## 使用
 
