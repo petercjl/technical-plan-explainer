@@ -67,7 +67,7 @@ export function installUpdate(check, services={}) {
     let mutated=false;
     try {
       mutated=true;
-      run(['install','--global','--prefix',prefix,'--ignore-scripts','--no-audit','--no-fund',`${pkg.name}@${check.available}`]);
+      run(['install','--global','--prefix',prefix,'--prefer-online','--ignore-scripts','--no-audit','--no-fund',`${pkg.name}@${check.available}`]);
       const version=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).version;
       if(version!==check.available) throw fail('UPDATE_VERIFY_FAILED','Installed package version mismatch.');
       for(const target of targets) if(sync(target).status!==0) throw fail('SKILL_SYNC_FAILED','A managed Skill needs reconciliation.');

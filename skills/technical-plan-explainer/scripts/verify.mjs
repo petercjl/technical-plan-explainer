@@ -19,16 +19,17 @@ run(async()=>{
  const assert=(name,ok,detail)=>{assertions.push({name,ok,detail});if(!ok)fail('BROWSER_CHECK_FAILED',name);};
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
  await page.route(/^https?:\/\//,r=>r.abort());
- const seek=async t=>{await page.evaluate(t=>samplePlayer.seek(t),t);await page.waitForTimeout(120);};
+ const seek=async t=>{await page.evaluate(async t=>{await samplePlayer.seek(t);await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));},t);await page.waitForTimeout(120);};
  const state=()=>page.evaluate(()=>{const p=samplePlayer,d=p.iframeElement.contentDocument;return{time:p.currentTime,paused:p.paused,audio:[...d.querySelectorAll('audio'),...p.shadowRoot.querySelectorAll('audio')].map(a=>({time:a.currentTime,paused:a.paused,rate:a.playbackRate,error:a.error?.code||null}))};});
  try{
-  await page.setViewportSize({width:1280,height:1000});await page.goto(pathToFileURL(file).href);
-  await page.waitForFunction(()=>window.samplePlayer?.ready&&window.samplePlayer?.assetsReady,{timeout:30000});
+  await page.bringToFront();await page.setViewportSize({width:1280,height:1000});await page.goto(pathToFileURL(file).href);
+  await page.waitForFunction(()=>window.samplePlayer?.ready&&window.samplePlayer?.assetsReady,null,{timeout:30000});
+  await page.evaluate(async()=>{await Promise.all([document.fonts.ready,samplePlayer.iframeElement.contentDocument.fonts.ready]);});
   assert('native duration',Math.abs(await page.evaluate(()=>samplePlayer.duration)-x.delivery.duration)<.05);
   const proof=[...new Set(x.story.scenes.flatMap(s=>s.proof_times))];
   for(const [i,t] of proof.entries()){await seek(t);await page.locator('hyperframes-player').screenshot({path:path.join(qa,'proof-'+i+'-'+t.toFixed(2)+'.png')});}
   const t=x.delivery.chapters[Math.min(1,x.delivery.chapters.length-1)].start+.4;
-  await seek(t);const first=await page.locator('hyperframes-player').screenshot();await seek(x.delivery.duration-.1);await seek(0);await seek(t);const second=await page.locator('hyperframes-player').screenshot();
+  await seek(t);const first=await page.locator('hyperframes-player').screenshot({path:path.join(qa,'seek-first.png')});await seek(x.delivery.duration-.1);await seek(0);await seek(t);const second=await page.locator('hyperframes-player').screenshot({path:path.join(qa,'seek-second.png')});
   assert('backward seek identical pixels',hash(first)===hash(second));
   const media=x.delivery.media[0];await seek(media.start+Math.min(1,media.duration/6));await page.evaluate(()=>{samplePlayer.muted=true;});const before=await state();
   await page.locator('#toggle').click();await page.waitForTimeout(1100);const playing=await state();

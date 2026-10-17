@@ -81,6 +81,7 @@ test('update: package version verification, rollback and lock release',()=>{
   const runner=args=>{calls.push(args);return args[0]==='pack'?'[{"filename":"old.tgz"}]':'';};
   assert.throws(()=>installUpdate({available:'0.9.0'},{prefix:scratch,npm:runner,spawn:()=>({status:0})}),{code:'UPDATE_VERIFY_FAILED'});
   assert.equal(calls.filter(x=>x[0]==='install').length,2);
+  assert.ok(calls.find(x=>x[0]==='install').includes('--prefer-online'),'update must refresh stale registry metadata');
   assert.equal(fs.existsSync(path.join(process.env.TECH_PLAN_STATE_DIR,'update.lock')),false);
 });
 test('doctor: absent runtime dependencies produce structured failure, no false ready',()=>{
