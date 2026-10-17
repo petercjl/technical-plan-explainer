@@ -1,0 +1,163 @@
+{
+  "schema": "portable-skill-capabilities",
+  "schema_version": "1.0.0",
+  "skill": "technical-plan-explainer",
+  "target_platforms": [
+    "codex",
+    "sealseek",
+    "workbuddy"
+  ],
+  "external_dependencies": [
+    {
+      "name": "hyperframes",
+      "contract": "Native init/check/keyframes and project-local core compiler/player; verified baseline 0.8.168; dynamically load current upstream Skill"
+    },
+    {
+      "name": "seedaudiocli",
+      "contract": "Canonical companion Skill, reference audio generation with task recovery; verified baseline 0.2.1; probe live help"
+    },
+    {
+      "name": "voice-profile",
+      "contract": "External accepted Cove master and checksum; required, private files stay outside Skill"
+    },
+    {
+      "name": "playwright",
+      "contract": "Existing installed module or composition dependency; configured authorized CDP endpoint"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "workspace.files",
+      "purpose": "Read sources and author isolated project artifacts",
+      "required": true,
+      "required_features": [
+        "read",
+        "exclusive-write",
+        "metadata",
+        "relative-assets"
+      ],
+      "input_fields": [
+        "paths",
+        "content"
+      ],
+      "output_fields": [
+        "artifacts",
+        "metadata"
+      ],
+      "side_effects": {
+        "local_write": true,
+        "external_mutation": false,
+        "may_cost_money": false,
+        "authorization": "Requested creation; preserve preexisting data; use fresh revisions"
+      },
+      "errors": [
+        "PERMISSION_REQUIRED",
+        "OUTPUT_CONTRACT_FAILED"
+      ]
+    },
+    {
+      "id": "command.execute",
+      "purpose": "Run deterministic app scripts and installed capability CLIs",
+      "required": true,
+      "required_features": [
+        "node22",
+        "exit-status",
+        "structured-output"
+      ],
+      "input_fields": [
+        "command",
+        "arguments",
+        "working_directory"
+      ],
+      "output_fields": [
+        "status",
+        "artifacts",
+        "task_id"
+      ],
+      "side_effects": {
+        "local_write": true,
+        "external_mutation": true,
+        "may_cost_money": true,
+        "authorization": "Only seedaudiocli generation within explicit user request; dry-run first; unknown result recovery before resubmission"
+      },
+      "errors": [
+        "CAPABILITY_UNAVAILABLE",
+        "AUTH_REQUIRED",
+        "PAID_ACTION_NOT_AUTHORIZED",
+        "PROVIDER_FAILURE"
+      ]
+    },
+    {
+      "id": "browser.verify",
+      "purpose": "Prove actual standalone playback with external requests blocked",
+      "required": true,
+      "required_features": [
+        "local-html",
+        "block-network",
+        "evaluate",
+        "screenshot",
+        "responsive-viewport"
+      ],
+      "input_fields": [
+        "html",
+        "proof_times",
+        "browser_configuration"
+      ],
+      "output_fields": [
+        "artifacts",
+        "metadata",
+        "warnings"
+      ],
+      "side_effects": {
+        "local_write": true,
+        "external_mutation": false,
+        "may_cost_money": false,
+        "authorization": "New owned QA page for requested artifact; closes only that page; no source uploads"
+      },
+      "errors": [
+        "CAPABILITY_UNAVAILABLE",
+        "OUTPUT_CONTRACT_FAILED"
+      ]
+    },
+    {
+      "id": "artifact.present",
+      "purpose": "Deliver playable HTML and evidence",
+      "required": true,
+      "required_features": [
+        "local-file-link"
+      ],
+      "input_fields": [
+        "artifact_path",
+        "summary"
+      ],
+      "output_fields": [
+        "artifacts",
+        "warnings"
+      ],
+      "side_effects": {
+        "publish": false,
+        "external_mutation": false,
+        "may_cost_money": false,
+        "authorization": "Present local requested artifact; no publication"
+      },
+      "errors": [
+        "OUTPUT_CONTRACT_FAILED"
+      ]
+    }
+  ],
+  "normalization": {
+    "success": {
+      "ok": true,
+      "artifacts": [],
+      "metadata": {},
+      "task_id": null,
+      "cost": null,
+      "warnings": []
+    },
+    "failure": {
+      "ok": false,
+      "code": "CAPABILITY_UNAVAILABLE",
+      "message": "Missing required mapping or feature"
+    }
+  }
+}

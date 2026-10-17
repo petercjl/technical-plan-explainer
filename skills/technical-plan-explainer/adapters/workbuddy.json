@@ -1,0 +1,61 @@
+{
+  "schema": "portable-skill-adapter",
+  "platform": "workbuddy",
+  "os_evidence": "Package installer supported; native Agent business run untested",
+  "mappings": [
+    {
+      "capability_id": "workspace.files",
+      "status": "implemented",
+      "features": [
+        "read",
+        "exclusive-write",
+        "metadata",
+        "relative-assets"
+      ],
+      "implementation": {
+        "kind": "native",
+        "instructions": "Use the host advertised local file/terminal capabilities to inspect metadata and author isolated files; run the bundled exclusive-write scripts. Missing file access returns CAPABILITY_UNAVAILABLE."
+      }
+    },
+    {
+      "capability_id": "command.execute",
+      "status": "implemented",
+      "features": [
+        "node22",
+        "exit-status",
+        "structured-output"
+      ],
+      "implementation": {
+        "kind": "native-plus-cli",
+        "instructions": "Use the actual host terminal/command capability, resolve Node.js >=22 and stable CLIs; read their canonical Skills. Capture exit status and JSON. Missing command access returns CAPABILITY_UNAVAILABLE; preserve provider task IDs and paid-action authorization."
+      }
+    },
+    {
+      "capability_id": "browser.verify",
+      "status": "implemented",
+      "features": [
+        "local-html",
+        "block-network",
+        "evaluate",
+        "screenshot",
+        "responsive-viewport"
+      ],
+      "implementation": {
+        "kind": "script",
+        "entry": "scripts/verify.mjs",
+        "instructions": "Read external runtime.json or explicit environment configuration for installed Playwright module and authorized CDP. Do not assume an application-bundle path or browser port. Missing browser returns CAPABILITY_UNAVAILABLE; return JSON report and screenshots."
+      }
+    },
+    {
+      "capability_id": "artifact.present",
+      "status": "implemented",
+      "features": [
+        "local-file-link"
+      ],
+      "implementation": {
+        "kind": "native",
+        "instructions": "Return the absolute local HTML artifact path through the host supported file/link delivery. If local link delivery is unavailable report CAPABILITY_UNAVAILABLE; do not claim a hosted URL."
+      }
+    }
+  ]
+}

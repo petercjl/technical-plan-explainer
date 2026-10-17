@@ -1,0 +1,17 @@
+{
+  "name": "@petercjl/technical-plan-explainer",
+  "version": "0.1.0",
+  "description": "Technical plans to HyperFrames mechanism animation and consistent Cove narration in offline HTML",
+  "type": "module",
+  "bin": { "technical-plan-explainer": "npm/cli.mjs" },
+  "files": ["npm/", "skills/", "capabilities.json", "README.md", "LICENSE"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check npm/cli.mjs && node --check npm/skills.mjs && node --check npm/update.mjs",
+    "prepack": "npm run check && npm test"
+  },
+  "publishConfig": { "access": "public" },
+  "repository": { "type": "git", "url": "git+https://github.com/petercjl/technical-plan-explainer.git" },
+  "license": "UNLICENSED"
+}

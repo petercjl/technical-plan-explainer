@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "package": "@petercjl/technical-plan-explainer",
+  "layer": "application-skill",
+  "cli": "technical-plan-explainer",
+  "skill": "technical-plan-explainer",
+  "commands": ["version", "capabilities", "doctor", "skill source", "skill status", "skill install", "skill update", "update check", "update install", "project", "bundle", "verify"],
+  "agents": ["codex", "sealseek", "workbuddy"],
+  "targets": {
+    "codex:macos": "tested-business-main-run; package lifecycle tested separately",
+    "sealseek:macos": "implemented; host discovery and business run untested",
+    "sealseek:windows": "implemented; native host business run untested",
+    "workbuddy:macos": "implemented; native host business run untested",
+    "workbuddy:windows": "implemented; native host business run untested"
+  },
+  "auto_update": {
+    "trigger": "Every globally installed CLI call, including the Skill startup source resolution",
+    "channel": "latest",
+    "major_version": "manual approval required",
+    "offline": "keep current",
+    "synchronization": "registered managed Skill copies",
+    "rollback": "local package archive plus per-Skill recoverable backups",
+    "disable_env": "TECH_PLAN_AUTO_UPDATE=0"
+  },
+  "external_dependencies": ["Node.js >=22", "hyperframes with canonical Skills", "seedaudiocli with canonical Skill and user authorization", "ffmpeg/ffprobe", "Playwright plus authorized browser", "external locked Cove voice profile and master"],
+  "configuration": "Private voice, runtime configuration and credentials remain outside the package. Installation does not grant service access."
+}

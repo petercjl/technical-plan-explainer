@@ -1,0 +1,4 @@
+interface:
+  display_name: "技术方案动画讲解"
+  short_description: "将技术方案转成 HyperFrames 动画与固定 Cove 配音的离线 HTML"
+  default_prompt: "使用 $technical-plan-explainer，把所附技术方案制作成带动画与 Cove 配音的离线 HTML。"
